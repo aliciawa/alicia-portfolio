@@ -6,6 +6,12 @@ export const site = {
   linkedin: "https://www.linkedin.com/in/fengxia-wang-8b85191b2/",
   summary:
     "Frontend developer with 6+ years of experience delivering high-quality web solutions for global brands. Strong in Vue.js and React, focused on building fast, accessible, user-friendly interfaces. Comfortable working end-to-end, collaborating with product/design, and shipping reliably.",
+  stats: {
+    projects: 5,
+    users: 10000, // 假设
+    awards: 3, // 假设
+    years: 6,
+  },
   skills: [
     "Vue.js",
     "React",
@@ -19,10 +25,12 @@ export const site = {
     "GitHub",
     "SEO",
   ],
+  education: [{ degree: "Master of Information Technology", school: "Chizhou University" }],
+  certifications: ["AWS Certified", "React Certified"], // 假设
   projects: [
     {
       name: "Nike China Official Website",
-      org: "Shanghai Baozun E-Commerce Co., Ltd",
+      subtitle: "React Portfolio Website",
       description:
         "Delivered the official Nike China e-commerce website, improving user experience and operational efficiency for a global sports brand.",
       tags: ["Vue.js", "React", "E-commerce"],
@@ -30,7 +38,7 @@ export const site = {
     },
     {
       name: "Adidas China Official Website",
-      org: "Shanghai Baozun E-Commerce Co., Ltd",
+      subtitle: "Photography Portfolio Website",
       description:
         "Built and maintained the official Adidas China website, focusing on responsive design and a seamless user journey.",
       tags: ["Vue.js", "JavaScript", "Responsive Design"],
@@ -38,7 +46,7 @@ export const site = {
     },
     {
       name: "Louis Vuitton China Website",
-      org: "Shanghai Baozun E-Commerce Co., Ltd",
+      subtitle: "E-commerce Application",
       description:
         "Developed the luxury brand's Chinese web presence, ensuring premium UX aligned with brand standards.",
       tags: ["Vue.js", "React", "High-end Design"],
@@ -46,10 +54,17 @@ export const site = {
     },
     {
       name: "Disney WeChat Mini Program",
-      org: "Shanghai Baozun E-Commerce Co., Ltd",
+      subtitle: "Food Ordering Application",
       description:
         "Created a WeChat Mini Program for the Chinese market with interactive mobile experiences.",
       tags: ["WeChat", "JavaScript", "Mobile"],
+      link: "",
+    },
+    {
+      name: "Full Stack Roadmap",
+      subtitle: "React Firebase Template",
+      description: "Project 5 description",
+      tags: ["React", "Firebase"],
       link: "",
     },
   ],

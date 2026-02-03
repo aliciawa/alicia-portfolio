@@ -1,165 +1,247 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { site } from "@/lib/site-data";
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-24 py-12">
-      <h2 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+    <motion.section
+      id={id}
+      className="scroll-mt-24 py-12 min-w-[1024px]"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+    >
+      <h2 className="text-xl font-semibold tracking-tight text-center text-zinc-100">
         {title}
       </h2>
-      <div className="mt-5 text-zinc-700 dark:text-zinc-300">{children}</div>
-    </section>
+      <div className="mt-5 text-zinc-300">{children}</div>
+    </motion.section>
   );
 }
 
 export default function Home() {
+  const [isDark, setIsDark] = useState(true);
+
+  const toggleTheme = () => setIsDark(!isDark);
+
   return (
-    <div className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
+    <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-black'} relative overflow-hidden`}>
+      {/* Digital background */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-blue-500"></div>
+        <div className="absolute inset-0 text-green-400 font-mono text-xs leading-none whitespace-nowrap overflow-hidden">
+          {Array.from({ length: 100 }, (_, i) => (
+            <div key={i} className="animate-pulse">
+              01234567890123456789012345678901234567890123456789012345678901234567890123456789
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Top nav */}
-      <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur dark:border-zinc-800/70 dark:bg-zinc-950/70">
+      <header className="relative z-10 sticky top-0 border-b border-green-500/20 bg-black/80 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-indigo-500 to-fuchsia-500" aria-hidden />
+            <div className="h-9 w-9 rounded-full bg-linear-to-br from-green-400 to-blue-500"></div>
             <div className="leading-tight">
               <div className="font-semibold">{site.name}</div>
-              <div className="text-sm text-zinc-600 dark:text-zinc-400">{site.title}</div>
+                <div className="text-sm text-green-400">{site.title}</div>
             </div>
           </div>
           <nav className="hidden items-center gap-6 text-sm md:flex">
-            <a className="hover:text-indigo-600" href="#about">
+            <a className="hover:text-green-400 transition-colors" href="#about">
               About
             </a>
-            <a className="hover:text-indigo-600" href="#skills">
-              Skills
-            </a>
-            <a className="hover:text-indigo-600" href="#projects">
+            <a className="hover:text-green-400 transition-colors" href="#projects">
               Projects
             </a>
-            <a className="hover:text-indigo-600" href="#experience">
-              Experience
-            </a>
-            <a className="hover:text-indigo-600" href="#contact">
+            <a className="hover:text-green-400 transition-colors" href="#contact">
               Contact
             </a>
+            <button onClick={toggleTheme} className={`px-3 py-1 rounded ${isDark ? 'bg-green-500' : 'bg-blue-500'} text-white`}>
+              {isDark ? 'Light' : 'Dark'}
+            </button>
           </nav>
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-4">
+      <main className="relative z-10 min-w-[1024px] mx-auto">
         {/* Hero */}
-        <section className="py-14">
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">{site.location}</p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">{site.name}</h1>
-          <p className="mt-4 max-w-2xl text-lg text-zinc-700 dark:text-zinc-300">{site.summary}</p>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              className="inline-flex items-center justify-center rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
-              href="#contact"
+        <section className="py-20 px-4">
+          <div className="mx-auto max-w-5xl">
+            <motion.div
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              Contact me
-            </a>
-            <a
-              className="inline-flex items-center justify-center rounded-lg border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-900 hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-900"
-              href={site.linkedin}
-              target="_blank"
-              rel="noreferrer"
+              <h1 className="text-5xl md:text-7xl font-bold mb-4">
+                Hello, I'm <span className="text-green-400">{site.name.split(' ')[0]}</span>
+              </h1>
+              <p className="text-xl mb-8 text-gray-300">{site.title}</p>
+              <div className="flex gap-4 justify-center mb-8">
+                <a
+                  className="px-6 py-3 rounded-lg font-semibold transition-colors bg-green-500 hover:bg-green-600"
+                  href="#contact"
+                >
+                  Hire Me
+                </a>
+                <a
+                  className="border border-green-500 hover:bg-green-500 px-6 py-3 rounded-lg font-semibold transition-colors"
+                  href="#"
+                >
+                  Download CV
+                </a>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              LinkedIn
-            </a>
+              <div className="w-80 h-80 bg-gradient-to-br from-green-400 to-blue-500 rounded-full mx-auto"></div>
+            </motion.div>
           </div>
         </section>
 
-        <Section id="about" title="About">
-          <p className="leading-relaxed">{site.summary}</p>
-        </Section>
-
-        <Section id="skills" title="Skills">
-          <div className="flex flex-wrap gap-2">
-            {site.skills.map((s) => (
-              <span
-                key={s}
-                className="rounded-full bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300"
-              >
-                {s}
-              </span>
+        {/* Stats */}
+        <section className="py-20 px-4 relative">
+          <div className="absolute inset-0 opacity-5 text-green-400 font-mono text-xs leading-none whitespace-nowrap overflow-hidden">
+            {Array.from({ length: 50 }, (_, i) => (
+              <div key={i}>01234567890123456789012345678901234567890123456789012345678901234567890123456789</div>
             ))}
+          </div>
+          <div className="relative z-10 mx-auto max-w-5xl grid grid-cols-2 md:grid-cols-4 gap-8">
+            {Object.entries(site.stats).map(([key, value]) => (
+              <motion.div
+                key={key}
+                className="text-center"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <div className="text-4xl font-bold mb-2 text-green-400">{value}+</div>
+                <div className="text-gray-300">{key}</div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        <Section id="about" title="About Me">
+          <div className="max-w-2xl mx-auto text-center">
+            <p className="leading-relaxed mb-6 text-gray-300">{site.summary}</p>
+            <div className="w-64 h-64 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg mx-auto mb-6"></div>
+            <h3 className="text-2xl font-semibold mb-4 text-green-400">Skills</h3>
+            <div className="flex flex-wrap gap-2 mb-6 justify-center">
+              {site.skills.map((s) => (
+                <span
+                  key={s}
+                  className="px-3 py-1 rounded-full text-sm bg-green-500/20 text-green-400"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+            <h3 className="text-2xl font-semibold mb-4 text-green-400">Education</h3>
+            <ul className="mb-6 text-center">
+              {site.education.map((e) => (
+                <li className="text-gray-300">
+                  {e.degree} - {e.school}
+                </li>
+              ))}
+            </ul>
+            <h3 className="text-2xl font-semibold mb-4 text-green-400">Certifications</h3>
+            <ul className="text-center">
+              {site.certifications.map((c) => (
+                <li className="text-gray-300">
+                  • {c}
+                </li>
+              ))}
+            </ul>
           </div>
         </Section>
 
-        <Section id="projects" title="Projects">
-          <div className="grid gap-4 md:grid-cols-2">
-            {site.projects.map((p) => (
-              <div
+        <Section id="projects" title="My Projects">
+          <div className="max-w-2xl mx-auto space-y-6">
+            {site.projects.map((p, index) => (
+              <motion.div
                 key={p.name}
-                className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950"
+                className="p-6 rounded-lg hover:transition-colors text-center bg-gray-800 hover:bg-gray-700"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="text-base font-semibold">{p.name}</h3>
-                    <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{p.org}</p>
-                  </div>
-                  {p.link ? (
-                    <Link
-                      href={p.link}
-                      target="_blank"
-                      className="text-sm font-semibold text-indigo-600 hover:underline"
-                    >
-                      View
-                    </Link>
-                  ) : null}
-                </div>
-                <p className="mt-3 text-sm leading-relaxed">{p.description}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <h3 className="text-xl font-semibold mb-2 text-green-400">{p.name}</h3>
+                <p className="mb-2 text-green-300">##### {p.subtitle}</p>
+                <p className="mb-4 text-gray-300">{p.description}</p>
+                <div className="flex flex-wrap gap-2 justify-center">
                   {p.tags.map((t) => (
                     <span
                       key={t}
-                      className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+                      className="px-2 py-1 rounded text-xs bg-green-500/20 text-green-400"
                     >
                       {t}
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </Section>
 
-        <Section id="experience" title="Experience">
-          <div className="space-y-6">
-            {site.experience.map((e) => (
-              <div key={e.role + e.company} className="rounded-2xl border border-zinc-200 p-5 dark:border-zinc-800">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <div>
-                    <div className="font-semibold">{e.role}</div>
-                    <div className="text-sm text-zinc-600 dark:text-zinc-400">{e.company}</div>
-                  </div>
-                  <div className="text-sm text-zinc-600 dark:text-zinc-400">{e.period}</div>
-                </div>
-                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm">
-                  {e.bullets.map((b) => (
-                    <li key={b}>{b}</li>
-                  ))}
-                </ul>
+        <Section id="contact" title="Let's Connect">
+          <div className="max-w-2xl mx-auto">
+            <p className="mb-8 text-gray-300">
+              I'm currently looking for new opportunities, my inbox is always open. Whether
+              you have a question or just want to say hi, I'll try my best to get back to you!
+            </p>
+            <form className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  className="bg-gray-800 border border-green-500/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-green-500"
+                />
+                <input
+                  type="email"
+                  placeholder="Your Email"
+                  className="bg-gray-800 border border-green-500/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-green-500"
+                />
               </div>
-            ))}
+              <input
+                type="text"
+                placeholder="Subject"
+                className="w-full bg-gray-800 border border-green-500/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-green-500"
+              />
+              <textarea
+                placeholder="Message"
+                rows={5}
+                className="w-full bg-gray-800 border border-green-500/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-green-500"
+              ></textarea>
+              <button
+                type="submit"
+                className="w-full bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg font-semibold transition-colors"
+              >
+                Send Message
+              </button>
+            </form>
+            <div className="flex justify-center gap-6 mt-8">
+              <a href="#" className="text-green-400 hover:text-green-300 transition-colors">
+                GitHub
+              </a>
+              <a href={site.linkedin} target="_blank" className="text-green-400 hover:text-green-300 transition-colors">
+                LinkedIn
+              </a>
+            </div>
           </div>
         </Section>
 
-        <Section id="contact" title="Contact">
-          <div className="rounded-2xl border border-zinc-200 p-5 dark:border-zinc-800">
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">Email</p>
-            <a className="mt-1 block text-base font-semibold hover:underline" href={`mailto:${site.email}`}>
-              {site.email}
-            </a>
-            <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">LinkedIn</p>
-            <a className="mt-1 inline-block text-base font-semibold text-indigo-600 hover:underline" href={site.linkedin}>
-              {site.linkedin}
-            </a>
-          </div>
-        </Section>
-
-        <footer className="py-10 text-sm text-zinc-500">
+        <footer className="py-10 text-center text-gray-400">
           © {new Date().getFullYear()} {site.name}. All rights reserved.
         </footer>
       </main>
